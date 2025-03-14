@@ -8,9 +8,11 @@
   color: #808080;
   max-width: 27.25rem;
   margin: 0 auto;
+  margin-bottom: 0.7rem;
 }
 
 .search__input {
+  color: white;
   flex-grow: 1;
   max-width: 20rem;
   border-radius: 0.25rem;
@@ -18,20 +20,24 @@
   outline: 2px solid transparent;
   border: transparent;
   transition: outline 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  background-color: wheat;
+  background: linear-gradient(135deg, #0a4b3d 0%, #3d9678 100%);
+}
+
+.search__input::placeholder {
+  color: white;
 }
 
 .search__input:hover {
-  outline: 2px solid black;
+  outline: 2px solid #3d9678;
 }
 
 .search__input:active,
 .search__input:focus {
-  outline: 10px solid rgba(245, 222, 179, 0.295);
+  outline: 2px solid #ffffff;
 }
 
-.search__button {
-  color: white;
+.common-button {
+  color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,9 +55,22 @@
   font-weight: 600;
 }
 
-.search__button:hover {
-  color: #000000;
-  background-color: rgba(255, 255, 255, 0.61);
+.common-button:hover {
+  color: #6bf0c3;
+  background-color: rgba(255, 255, 255, 0.384);
+}
+
+.load-more-button {
+  padding: 0.8rem;
+  margin: 0 auto;
+}
+
+.load-more-button {
+  display: none;
+}
+
+.display-visual {
+  display: block;
 }
 
 .gallery {
@@ -59,6 +78,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 24px;
+  margin-bottom: 5rem;
 }
 
 .gallery__container {
@@ -94,11 +114,6 @@
   .gallery__image {
     width: 320px;
     height: 200px;
-  }
-
-  .gallery {
-  }
-  .gallery__item {
   }
 
   .container {
@@ -155,7 +170,6 @@
 }
 
 .loader-container {
-  margin-bottom: 5rem;
   height: 72px;
 }
 

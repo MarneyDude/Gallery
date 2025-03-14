@@ -28,15 +28,15 @@ body {
 
 main {
   flex-grow: 1;
-
-  background: linear-gradient(
-    to right bottom,
-    #a87d4b 25%,
-    #8c5a38 50%,
-    #6f3f28 75%,
-    #5a2d1b 100%
-  );
+  background: url('/img/10\ бер.\ 2025\ р.\,\ 16_57_29.png'),
+    linear-gradient(135deg, #0a4b3d, #3d9678);
+  background-blend-mode: overlay;
+  background-size: 100%;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  padding-bottom: 4rem;
 }
+
 main:has(.back-link) {
   text-align: center;
 }
