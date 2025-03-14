@@ -14,6 +14,7 @@ const HTMLelements = {
 };
 
 const { formEl, galleryEl, loadMoreButtonEl, loader } = HTMLelements;
+
 let inputValue = '';
 
 formEl.addEventListener('submit', async (event) => {
