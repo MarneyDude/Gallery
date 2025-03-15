@@ -38,8 +38,56 @@ main {
   box-shadow: 0 4px 10px rgba(0, 198, 255, 0.3);
   backdrop-filter: blur(10px);
   padding-bottom: 4rem;
+  position: relative;
 }
 
+main::before {
+  content: 'GALLERY';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 7rem;
+  font-weight: bold;
+  background: linear-gradient(
+    45deg,
+    #00c6ff,
+    #0077b6,
+    #ff00ff,
+    #ffea00,
+    #00ff6a,
+    #00c6ff
+  );
+  background-size: 300%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: neonAnimation 5s linear infinite;
+  z-index: -1; /* Текст буде позаду основного контенту */
+  pointer-events: none; /* Запобігає взаємодії з текстом */
+}
+
+@keyframes neonAnimation {
+  0% {
+    background-position: 0%;
+    text-shadow: 0 0 10px #00c6ff, 0 0 20px #0077b6, 0 0 30px #ff00ff;
+  }
+  25% {
+    background-position: 25%;
+    text-shadow: 0 0 15px #00c6ff, 0 0 25px #0077b6, 0 0 35px #ff00ff;
+  }
+  50% {
+    background-position: 50%;
+    text-shadow: 0 0 10px #0077b6, 0 0 20px #ff00ff, 0 0 30px #ffea00;
+  }
+  75% {
+    background-position: 75%;
+    text-shadow: 0 0 15px #00ff6a, 0 0 25px #0077b6, 0 0 35px #ffea00;
+  }
+  100% {
+    background-position: 100%;
+    text-shadow: 0 0 10px #00c6ff, 0 0 20px #0077b6, 0 0 30px #00ff6a;
+  }
+}
 main:has(.back-link) {
   text-align: center;
 }
