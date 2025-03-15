@@ -1,3 +1,6 @@
+/* section.css */
+
+/* Якщо стилі для .search потрібні, їх можна додати сюди */
 .search {
 }
 
@@ -7,12 +10,10 @@
   padding: 2.25rem 0;
   color: #808080;
   max-width: 27.25rem;
-  margin: 0 auto;
-  margin-bottom: 0.7rem;
+  margin: 0 auto 0.7rem;
 }
 
 .search__input {
-  color: white;
   flex-grow: 1;
   max-width: 20rem;
   border-radius: 0.25rem;
@@ -36,6 +37,7 @@
 .search__input:focus::placeholder {
   color: rgb(248, 248, 248);
 }
+
 .search__input:active,
 .search__input:focus {
   box-shadow: 0 0 10px #00c6ff, 0 0 40px #0077b6;
@@ -44,7 +46,6 @@
 }
 
 .common-button {
-  color: rgb(255, 255, 255);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,7 +58,6 @@
   font-weight: bold;
   cursor: pointer;
   outline: none;
-  transition: 0.3s ease-in-out;
   position: relative;
   overflow: hidden;
   transition: 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
@@ -92,9 +92,6 @@
 .load-more-button {
   padding: 0.8rem;
   margin: 0 auto;
-}
-
-.load-more-button {
   display: none;
 }
 
@@ -119,14 +116,15 @@
   display: flex;
   flex-direction: column;
   padding: 1rem;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
-    rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
-    rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+  box-shadow: rgba(0, 0, 0, 0.25) 0 0.0625em 0.0625em,
+    rgba(0, 0, 0, 0.25) 0 0.125em 0.5em,
+    rgba(255, 255, 255, 0.1) 0 0 0 1px inset;
   transition: transform 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67),
     background-color 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
   background-color: #00c8ff3a;
   border-radius: 1rem;
 }
+
 .gallery__item:hover {
   transform: scale(1.03);
   background-color: #00c8ff93;
@@ -144,7 +142,6 @@
     width: 320px;
     height: 200px;
   }
-
   .container {
     max-width: 768px;
     margin: 0 auto;
@@ -154,9 +151,9 @@
 
 .gallery_user-stats {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  flex-direction: column;
   font-family: 'Big Shoulders Stencil', sans-serif;
   font-size: 1.6rem;
   color: #ffffff;
@@ -175,6 +172,7 @@
 .gallery__item:hover .gallery_user-stats {
   opacity: 1;
 }
+
 .gallery_user-stats span {
   font-size: 1.3rem;
 }
@@ -195,7 +193,6 @@
 
 .gallery__user-stats-text:hover {
   color: #00c6ff;
-  pointer-events: all;
 }
 
 .loader-container {
@@ -216,7 +213,7 @@
     radial-gradient(circle 25px at 25px 25px, #fff 100%, transparent 0),
     linear-gradient(#fff 50px, transparent 0);
   background-size: 50px 50px, 100px 76px, 50px 50px, 120px 40px;
-  background-position: 0px 30px, 37px 0px, 122px 30px, 25px 40px;
+  background-position: 0 30px, 37px 0, 122px 30px, 25px 40px;
   background-repeat: no-repeat;
   position: relative;
   box-sizing: border-box;
@@ -230,9 +227,9 @@
 .gallery__container a {
   position: relative;
 }
+
 .loader-position {
   position: absolute;
-  margin: 0;
   top: 35%;
   left: 50%;
   transform: translate(-50%);
@@ -240,11 +237,11 @@
 
 .loader::after {
   content: '';
+  position: absolute;
   left: 0;
   right: 0;
   margin: auto;
   bottom: 20px;
-  position: absolute;
   width: 36px;
   height: 36px;
   border-radius: 50%;
@@ -262,6 +259,7 @@
     transform: rotate(360deg);
   }
 }
+
 .sl-wrapper .sl-navigation button {
   color: white !important;
 }
@@ -279,5 +277,5 @@ body .sl-overlay {
 }
 
 .sl-wrapper .sl-close {
-  color: rgb(255, 255, 255) !important;
+  color: #fff !important;
 }
