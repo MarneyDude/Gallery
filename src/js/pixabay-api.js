@@ -1,94 +1,76 @@
 import axios from 'axios';
-
-import { loadMoreBtnHidden, loadMoreBtnVisual } from '../main';
-
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 
-let page = 1;
-let per_page = 15;
-
-export async function dataRequest(value, newSearch = false) {
-  if (newSearch) {
-    page = 1;
+export class PixabayApiService {
+  constructor() {
+    this.searchQuery = '';
+    this.page = 1;
+    this.perPage = 15;
+    this.apiKey = '49255995-7f6d469d944259310339ef533';
+    this.baseURL = 'https://pixabay.com/api/';
   }
 
-  const params = new URLSearchParams({
-    key: '49255995-7f6d469d944259310339ef533',
-    q: value,
-    image_type: 'photo',
-    page,
-    per_page,
-    orientation: 'horizontal',
-    safesearch: true,
-  });
+  async fetchImages() {
+    const params = new URLSearchParams({
+      key: this.apiKey,
+      q: this.searchQuery,
+      image_type: 'photo',
+      page: this.page,
+      per_page: this.perPage,
+      orientation: 'horizontal',
+      safesearch: true,
+    });
 
-  try {
-    const response = await axios.get('https://pixabay.com/api/', { params });
+    try {
+      const response = await axios.get(this.baseURL, { params });
 
-    const dataImages = response.data.hits;
+      const { hits, totalHits } = response.data;
 
-    let totalImages = response.data.totalHits;
+      if (hits.length === 0) {
+        this.showToast(
+          'Sorry,',
+          'There are no images matching your search query. Please try again!',
+          'warning',
+        );
+        return { hits: [], totalHits: 0 };
+      }
 
-    if (dataImages.length === 0) {
-      message_DataIsEmpty();
-      return [];
+      this.page += 1;
+      return { hits, totalHits };
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      this.showToast(
+        'Error',
+        'fetching data. Please try again later.',
+        'error',
+      );
+      return { hits: [], totalHits: 0 };
     }
-
-    if (page * per_page <= totalImages) {
-      loadMoreBtnVisual();
-    } else {
-      endingSearch();
-    }
-
-    page += 1;
-
-    return dataImages;
-  } catch (error) {
-    message_ErrorFetchingData();
-    console.error('Error fetching data:', error);
-    return [];
   }
-}
 
-function message_DataIsEmpty() {
-  iziToast.show({
-    title: 'Sorry,',
-    titleSize: '21',
-    message:
-      'there are no images matching your search query. Please try again!',
-    position: 'topRight',
-    iconUrl: 'https://www.svgrepo.com/show/340010/cloud-data-ops.svg',
-    iconColor: '#ffffff',
-    messageSize: '21',
-    messageColor: 'black',
-  });
-}
+  reset() {
+    this.page = 1;
+  }
 
-function message_ErrorFetchingData() {
-  iziToast.show({
-    title: 'Sorry,',
-    titleSize: '21',
-    message: 'Error Fetching Data:',
-    position: 'topRight',
-    iconUrl: 'https://www.svgrepo.com/show/340010/cloud-data-ops.svg',
-    iconColor: '#ffffff',
-    messageSize: '21',
-    messageColor: 'black',
-  });
-}
+  setQuery(query) {
+    this.searchQuery = query;
+    this.reset();
+  }
 
-function endingSearch() {
-  loadMoreBtnHidden();
-
-  iziToast.show({
-    title: 'Sorry,',
-    titleSize: '21',
-    message: `We're sorry, but you've reached the end of search results.`,
-    position: 'topRight',
-    iconUrl: 'https://www.svgrepo.com/show/340010/cloud-data-ops.svg',
-    iconColor: '#ffffff',
-    messageSize: '21',
-    messageColor: 'black',
-  });
+  showToast(title, message, type = 'info') {
+    iziToast.show({
+      backgroundColor: '#f36f07',
+      title,
+      titleSize: 20,
+      message,
+      position: 'topRight',
+      iconUrl: 'https://www.svgrepo.com/show/340010/cloud-data-ops.svg',
+      iconColor: '#ffffff',
+      messageSize: '20',
+      messageColor: 'black',
+      timeout: 3000,
+      class: type,
+    });
+  }
 }

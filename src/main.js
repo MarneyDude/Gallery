@@ -1,70 +1,88 @@
-import { dataRequest } from './js/pixabay-api';
-import { renderGallery } from './js/render-functions';
+import { PixabayApiService } from './js/pixabay-api.js';
+import { renderGallery, clearGallery } from './js/render-functions.js';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
+const formEl = document.querySelector('.form');
+const paginationButton = document.querySelector('.js-load-more-button');
+const loader = document.querySelector('.loader');
 
-const lightboxEl = new SimpleLightbox('.gallery__container a');
-
-const HTMLelements = {
-  formEl: document.querySelector('.form'),
-  galleryEl: document.querySelector('.js-gallery'),
-  loadMoreButtonEl: document.querySelector('.js-load-more-button'),
-  loader: document.querySelector('.loader'),
-};
-
-const { formEl, galleryEl, loadMoreButtonEl, loader } = HTMLelements;
-
-let inputValue = '';
+const apiService = new PixabayApiService();
 
 formEl.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  const form = new FormData(formEl);
+  const formData = new FormData(formEl);
+  const inputQuery = formData.get('input').trim();
 
-  inputValue = form.get('input');
-
-  galleryEl.innerHTML = '';
-  loadMoreBtnHidden();
-  loader.classList.remove('loader-hidden');
-
-  if (!inputValue) {
+  if (!inputQuery) {
     return;
   }
 
-  const imagesDataArray = await dataRequest(inputValue, true).finally(() =>
-    loader.classList.add('loader-hidden'),
-  );
+  apiService.setQuery(inputQuery);
 
-  renderGallery(imagesDataArray, galleryEl);
+  clearGallery();
 
-  lightboxEl.refresh();
+  loaderDisplayOn();
+
+  const { hits, totalHits } = await apiService.fetchImages();
+
+  loaderDisplayOff();
+
+  if (hits.length > 0) {
+    renderGallery(hits);
+    paginationBtnDisplayToggle(apiService, paginationButton, totalHits);
+  }
 
   formEl.reset();
 });
 
-export function loadMoreBtnVisual() {
-  loadMoreButtonEl.classList.add('display-visual');
-}
-
-export function loadMoreBtnHidden() {
-  loadMoreButtonEl.classList.remove('display-visual');
-}
-
-loadMoreButtonEl.addEventListener('click', async (event) => {
+paginationButton.addEventListener('click', async (event) => {
   event.preventDefault();
 
-  const imagesDataArray = await dataRequest(inputValue).finally(() =>
-    loader.classList.add('loader-hidden'),
-  );
+  loaderDisplayOn();
 
-  renderGallery(imagesDataArray, galleryEl);
+  const { hits, totalHits } = await apiService.fetchImages();
 
-  lightboxEl.refresh();
+  loaderDisplayOff();
 
-  const element = document.querySelector('.gallery__item');
+  if (hits.length > 0) {
+    renderGallery(hits);
+    paginationBtnDisplayToggle(apiService, paginationButton, totalHits);
+  }
 
-  const height = element.getBoundingClientRect().height;
-
-  window.scrollBy({ top: height * 2, behavior: 'smooth' });
+  const firstGalleryItem = document.querySelector('.gallery__item');
+  if (firstGalleryItem) {
+    const { height } = firstGalleryItem.getBoundingClientRect();
+    window.scrollBy({ top: height * 2, behavior: 'smooth' });
+  }
 });
+
+function paginationBtnDisplayToggle(apiService, paginationButton, totalHits) {
+  const displayToggle = (apiService.page - 1) * apiService.perPage < totalHits;
+
+  paginationButton.classList.toggle('display-On-Of', displayToggle);
+
+  if (!displayToggle) {
+    iziToast.show({
+      backgroundColor: '#008ae9',
+      title: `We're sorry`,
+      titleSize: 20,
+      message: `but you've reached the end of search results`,
+      position: 'topRight',
+      iconUrl: 'https://www.svgrepo.com/show/340010/cloud-data-ops.svg',
+      iconColor: '#ffffff',
+      messageSize: '20',
+      messageColor: 'black',
+      timeout: 3000,
+    });
+  }
+}
+
+function loaderDisplayOn() {
+  loader.classList.remove('js-loader');
+}
+
+function loaderDisplayOff() {
+  loader.classList.add('js-loader');
+}
