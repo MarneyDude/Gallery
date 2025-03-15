@@ -24,6 +24,7 @@ formEl.addEventListener('submit', async (event) => {
   clearGallery();
 
   loaderDisplayOn();
+  paginationButton.classList.remove('display-On-Of');
 
   const { hits, totalHits } = await apiService.fetchImages();
 
@@ -59,7 +60,7 @@ paginationButton.addEventListener('click', async (event) => {
 });
 
 function paginationBtnDisplayToggle(apiService, paginationButton, totalHits) {
-  const displayToggle = (apiService.page - 1) * apiService.perPage < totalHits;
+  const displayToggle = (apiService.page - 1) * apiService.perPage <= totalHits;
 
   paginationButton.classList.toggle('display-On-Of', displayToggle);
 

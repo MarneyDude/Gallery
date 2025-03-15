@@ -17,23 +17,30 @@
   max-width: 20rem;
   border-radius: 0.25rem;
   padding: 0.7rem 1rem;
-  outline: 2px solid transparent;
-  border: transparent;
-  transition: outline 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  background: linear-gradient(135deg, #0a4b3d 0%, #3d9678 100%);
+  color: #ffffff;
+  background: transparent;
+  border: 2px solid #00c6ff;
+  outline: none;
+  text-align: center;
+  transition: 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
 }
 
 .search__input::placeholder {
-  color: white;
+  color: rgba(253, 253, 253, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  transition: 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
 }
 
-.search__input:hover {
-  outline: 2px solid #3d9678;
+.search__input:focus::placeholder {
+  color: rgb(248, 248, 248);
 }
-
 .search__input:active,
 .search__input:focus {
-  outline: 2px solid #ffffff;
+  box-shadow: 0 0 10px #00c6ff, 0 0 40px #0077b6;
+  border-color: #0077b6;
+  background: rgba(0, 198, 255, 0.1);
 }
 
 .common-button {
@@ -43,21 +50,43 @@
   justify-content: center;
   border-radius: 8px;
   padding: 0.5rem 1.6rem;
+  color: #00c6ff;
   background: transparent;
-  border: transparent;
-  box-shadow: rgba(0, 0, 0, 0.17) 0px -23px 25px 0px inset,
-    rgba(0, 0, 0, 0.15) 0px -36px 30px 0px inset,
-    rgba(0, 0, 0, 0.1) 0px -79px 40px 0px inset, rgba(0, 0, 0, 0.06) 0px 2px 1px,
-    rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px,
-    rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
-  transition: transform 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67),
-    background 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  font-weight: 600;
+  border: 2px solid #00c6ff;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  transition: 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  transition: 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
 }
 
 .common-button:hover {
-  color: #6bf0c3;
-  background-color: rgba(255, 255, 255, 0.384);
+  background: rgba(0, 198, 255, 0.1);
+  box-shadow: 0 0 10px #00c6ff, 0 0 40px #0077b6;
+  border-color: #0077b6;
+  color: #fff;
+}
+
+.common-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #00c6ff, #0077b6, #1e215d);
+  filter: blur(10px);
+  opacity: 0;
+  transition: opacity 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  z-index: -1;
+}
+
+.common-button:hover::before {
+  opacity: 1;
 }
 
 .load-more-button {
@@ -89,18 +118,18 @@
 .gallery__item {
   display: flex;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1rem;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0.0625em 0.0625em,
     rgba(0, 0, 0, 0.25) 0px 0.125em 0.5em,
     rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
   transition: transform 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67),
     background-color 250ms cubic-bezier(0.17, 0.67, 0.83, 0.67);
-  background-color: rgba(0, 0, 0, 0.342);
+  background-color: #00c8ff3a;
   border-radius: 1rem;
 }
 .gallery__item:hover {
   transform: scale(1.03);
-  background-color: rgba(255, 255, 255, 0.377);
+  background-color: #00c8ff93;
 }
 
 .gallery__image {
@@ -165,7 +194,7 @@
 }
 
 .gallery__user-stats-text:hover {
-  color: rgb(226, 155, 0);
+  color: #00c6ff;
   pointer-events: all;
 }
 
@@ -238,7 +267,7 @@
 }
 
 body .sl-overlay {
-  background: rgb(0, 0, 0);
+  background: #00000096;
 }
 
 .sl-wrapper .sl-image img {
