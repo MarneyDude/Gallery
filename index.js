@@ -1,40 +1,28 @@
-import{a as b,i as f,S as L}from"./assets/vendor-DtRopbQG.js";(function(){const r=document.createElement("link").relList;if(r&&r.supports&&r.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))s(e);new MutationObserver(e=>{for(const t of e)if(t.type==="childList")for(const l of t.addedNodes)l.tagName==="LINK"&&l.rel==="modulepreload"&&s(l)}).observe(document,{childList:!0,subtree:!0});function o(e){const t={};return e.integrity&&(t.integrity=e.integrity),e.referrerPolicy&&(t.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?t.credentials="include":e.crossOrigin==="anonymous"?t.credentials="omit":t.credentials="same-origin",t}function s(e){if(e.ep)return;e.ep=!0;const t=o(e);fetch(e.href,t)}})();let i=1,p=15;async function g(a,r=!1){r&&(i=1);const o=new URLSearchParams({key:"49255995-7f6d469d944259310339ef533",q:a,image_type:"photo",page:i,per_page:p,orientation:"horizontal",safesearch:!0});try{const s=await b.get("https://pixabay.com/api/",{params:o}),e=s.data.hits;let t=s.data.totalHits;return e.length===0?(E(),[]):(i*p<=t?z():D(),i+=1,e)}catch(s){return q(),console.error("Error fetching data:",s),[]}}function E(){f.show({title:"Sorry,",titleSize:"21",message:"there are no images matching your search query. Please try again!",position:"topRight",iconUrl:"https://www.svgrepo.com/show/340010/cloud-data-ops.svg",iconColor:"#ffffff",messageSize:"21",messageColor:"black"})}function q(){f.show({title:"Sorry,",titleSize:"21",message:"Error Fetching Data:",position:"topRight",iconUrl:"https://www.svgrepo.com/show/340010/cloud-data-ops.svg",iconColor:"#ffffff",messageSize:"21",messageColor:"black"})}function D(){_(),f.show({title:"Sorry,",titleSize:"21",message:"We're sorry, but you've reached the end of search results.",position:"topRight",iconUrl:"https://www.svgrepo.com/show/340010/cloud-data-ops.svg",iconColor:"#ffffff",messageSize:"21",messageColor:"black"})}function y(a,r){const o=a.map(({webformatURL:s,largeImageURL:e,tags:t,likes:l,views:w,comments:v,downloads:S})=>`<li class='gallery__item'>
-              <div class='gallery__container '>
-                <a href='${e}'>
-                 
-                    <span class=' loader-position loader '></span>
-                    <img
-                      class='gallery__image'
-                      src='${s}'
-                      alt='${t}'
-                      onload="this.previousElementSibling.style.visibility = 'hidden';" 
-                      onerror="this.previousElementSibling.visibility = 'hidden';" 
-                    />
-                 
-                </a>
-
-                <ul class='gallery_user-stats'>
-                  <li class='gallery__user-stats-item'>
-                    <p class='gallery__user-stats-text'>
-                      Likes:<span>${l}</span>
-                    </p>
-                  </li>
-                  <li class='gallery__user-stats-item'>
-                    <p class='gallery__user-stats-text'>
-                      Views:<span>${w}</span>
-                    </p>
-                  </li>
-                  <li class='gallery__user-stats-item'>
-                    <p class='gallery__user-stats-text'>
-                      Comments:<span>${v}</span>
-                    </p>
-                  </li>
-                  <li class='gallery__user-stats-item'>
-                    <p class='gallery__user-stats-text'>
-                      Downloads:<span>${S}</span>
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            </li>`).join("");r.insertAdjacentHTML("beforeend",o)}const h=new L(".gallery__container a"),x={formEl:document.querySelector(".form"),galleryEl:document.querySelector(".js-gallery"),loadMoreButtonEl:document.querySelector(".js-load-more-button"),loader:document.querySelector(".loader")},{formEl:c,galleryEl:d,loadMoreButtonEl:m,loader:u}=x;let n="";c.addEventListener("submit",async a=>{if(a.preventDefault(),n=new FormData(c).get("input"),d.innerHTML="",_(),u.classList.remove("loader-hidden"),!n)return;const o=await g(n,!0).finally(()=>u.classList.add("loader-hidden"));y(o,d),h.refresh(),c.reset()});function z(){m.classList.add("display-visual")}function _(){m.classList.remove("display-visual")}m.addEventListener("click",async a=>{a.preventDefault();const r=await g(n).finally(()=>u.classList.add("loader-hidden"));y(r,d),h.refresh();const s=document.querySelector(".gallery__item").getBoundingClientRect().height;window.scrollBy({top:s*2,behavior:"smooth"})});
+import{a as w,i as u,S as b}from"./assets/vendor-DtRopbQG.js";(function(){const s=document.createElement("link").relList;if(s&&s.supports&&s.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))t(e);new MutationObserver(e=>{for(const a of e)if(a.type==="childList")for(const i of a.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&t(i)}).observe(document,{childList:!0,subtree:!0});function r(e){const a={};return e.integrity&&(a.integrity=e.integrity),e.referrerPolicy&&(a.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?a.credentials="include":e.crossOrigin==="anonymous"?a.credentials="omit":a.credentials="same-origin",a}function t(e){if(e.ep)return;e.ep=!0;const a=r(e);fetch(e.href,a)}})();class L{constructor(){this.searchQuery="",this.page=1,this.perPage=15,this.apiKey="49255995-7f6d469d944259310339ef533",this.baseURL="https://pixabay.com/api/"}async fetchImages(){const s=new URLSearchParams({key:this.apiKey,q:this.searchQuery,image_type:"photo",page:this.page,per_page:this.perPage,orientation:"horizontal",safesearch:!0});try{const r=await w.get(this.baseURL,{params:s}),{hits:t,totalHits:e}=r.data;return t.length===0?(this.showToast("Sorry,","There are no images matching your search query. Please try again!","warning"),{hits:[],totalHits:0}):(this.page+=1,{hits:t,totalHits:e})}catch(r){return console.error("Error fetching data:",r),this.showToast("Error","fetching data. Please try again later.","error"),{hits:[],totalHits:0}}}reset(){this.page=1}setQuery(s){this.searchQuery=s,this.reset()}showToast(s,r,t="info"){u.show({backgroundColor:"#f36f07",title:s,titleSize:20,message:r,position:"topRight",iconUrl:"https://www.svgrepo.com/show/340010/cloud-data-ops.svg",iconColor:"#ffffff",messageSize:"20",messageColor:"black",timeout:3e3,class:t})}}const g=document.querySelector(".js-gallery");let v=new b(".gallery__container a");function p(o){const s=o.map(({webformatURL:r,largeImageURL:t,tags:e,likes:a,views:i,comments:m,downloads:_})=>`
+          <li class="gallery__item">
+            <div class="gallery__container">
+              <a href="${t}">
+                <img 
+                  class="gallery__image"
+                  src="${r}"
+                  alt="${e}"
+                  loading="lazy"
+                />
+              </a>
+              <ul class="gallery_user-stats">
+                <li class="gallery__user-stats-item">
+                  <p class="gallery__user-stats-text">Likes: <span>${a}</span></p>
+                </li>
+                <li class="gallery__user-stats-item">
+                  <p class="gallery__user-stats-text">Views: <span>${i}</span></p>
+                </li>
+                <li class="gallery__user-stats-item">
+                  <p class="gallery__user-stats-text">Comments: <span>${m}</span></p>
+                </li>
+                <li class="gallery__user-stats-item">
+                  <p class="gallery__user-stats-text">Downloads: <span>${_}</span></p>
+                </li>
+              </ul>
+            </div>
+          </li>`).join("");g.insertAdjacentHTML("beforeend",s),v.refresh()}function S(){g.innerHTML=""}const n=document.querySelector(".form"),c=document.querySelector(".js-load-more-button"),f=document.querySelector(".loader"),l=new L;n.addEventListener("submit",async o=>{o.preventDefault();const r=new FormData(n).get("input").trim();if(!r)return;l.setQuery(r),S(),d();const{hits:t,totalHits:e}=await l.fetchImages();y(),t.length>0&&(p(t),h(l,c,e)),n.reset()});c.addEventListener("click",async o=>{o.preventDefault(),d();const{hits:s,totalHits:r}=await l.fetchImages();y(),s.length>0&&(p(s),h(l,c,r));const t=document.querySelector(".gallery__item");if(t){const{height:e}=t.getBoundingClientRect();window.scrollBy({top:e*2,behavior:"smooth"})}});function h(o,s,r){const t=(o.page-1)*o.perPage<r;s.classList.toggle("display-On-Of",t),t||u.show({backgroundColor:"#008ae9",title:"We're sorry",titleSize:20,message:"but you've reached the end of search results",position:"topRight",iconUrl:"https://www.svgrepo.com/show/340010/cloud-data-ops.svg",iconColor:"#ffffff",messageSize:"20",messageColor:"black",timeout:3e3})}function d(){f.classList.remove("js-loader")}function y(){f.classList.add("js-loader")}
 //# sourceMappingURL=index.js.map
